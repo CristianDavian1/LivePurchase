@@ -14,7 +14,7 @@ namespace Presentation.Controllers
             User usuario = new User
             {
                 UserId = 1,
-                UserName = "Carlitos Romero",
+                UserName = "Carlitos Romeros",
                 Email = "carlos990@gmail.com"
             };
             return usuario;
