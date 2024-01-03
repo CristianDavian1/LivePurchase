@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using models.DTOs;
+using Models.DTOs;
+using Models.Responses;
+using Business.Domain.UserDomain;
 
 namespace Presentation.Controllers
 {
@@ -8,16 +10,25 @@ namespace Presentation.Controllers
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
-        [HttpGet]
-        public ActionResult<User> GetUser()
+        private readonly IUserDomain _domainUser;
+
+        public UserController(IUserDomain domainUser)
         {
-            User usuario = new User
-            {
-                UserId = 1,
-                UserName = "Carlitos Romero",
-                Email = "carlos990@gmail.com"
-            };
-            return usuario;
+            _domainUser = domainUser;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGenericUser([FromBody] RequestAddGenericUser UserRequest)
+        {
+            try {
+                var addUser = await _domainUser.CreateUser(UserRequest);
+                return Ok(addUser);
+            }catch(System.Exception e){
+                return Problem(e.Message);
+            }
+            
+
+            
         }
     }
 }

@@ -31,3 +31,4 @@ C:\Users\ElPapucho\Desktop\dotNetProject\obj\Debug\net8.0\refint\dotNetProject.d
 C:\Users\ElPapucho\Desktop\dotNetProject\obj\Debug\net8.0\dotNetProject.pdb
 C:\Users\ElPapucho\Desktop\dotNetProject\obj\Debug\net8.0\dotNetProject.genruntimeconfig.cache
 C:\Users\ElPapucho\Desktop\dotNetProject\obj\Debug\net8.0\ref\dotNetProject.dll
+C:\Users\ElPapucho\Desktop\dotNetProject\obj\Debug\net8.0\dotNetProject.sourcelink.json
