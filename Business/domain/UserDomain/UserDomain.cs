@@ -21,7 +21,7 @@ public class UserDomain : IUserDomain
                 GeneralResponseMessage repuesta = new GeneralResponseMessage
                 {
                     Status = 200,
-                    Msg = "Agregado correctamente desde repository" 
+                    Msg = "Se agrego el usuario correctamente" 
                 };
             return repuesta;
              } else {

@@ -12,10 +12,25 @@ namespace DataAcces.Repositorie
         {
             _dbcontext = dbcontext;
         }
-        public async Task<List<User>> AddUser(RequestAddGenericUser addUser)
+        public async Task<Boolean> AddUser(RequestAddGenericUser addUser)
         {
-            var users = _dbcontext.Users.ToList();
-            return users;
+            var newUser = new User
+            {
+                UserName = addUser.UserName,
+                AddressUser = addUser.AddressUser,
+                UserEmail = addUser.UserEmail,
+                UserRol = addUser.UserRol,
+                UserType = addUser.userType
+            };
+            _dbcontext.Add(newUser);
+            var res = await _dbcontext.SaveChangesAsync();
+            if(res > 0){
+                return true;
+            } else {
+                return false;
+            }
+
+            
         }
    }
 }

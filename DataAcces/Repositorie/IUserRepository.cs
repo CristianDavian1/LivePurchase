@@ -6,6 +6,6 @@ namespace DataAcces.Repositorie
 {
      public interface IUserRepository
     {
-        Task<List<User>> AddUser(RequestAddGenericUser addUser);
+        Task<Boolean> AddUser(RequestAddGenericUser addUser);
     }
 }

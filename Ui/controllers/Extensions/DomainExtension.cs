@@ -1,5 +1,6 @@
 using Business.Domain.UserDomain;
 using DataAcces.Repositorie;
+using DataAcces.ModelsDb;
 
 namespace Ui.Controllers.Extensions
 {
@@ -9,6 +10,7 @@ namespace Ui.Controllers.Extensions
         {
             services.Services.AddScoped<IUserDomain, UserDomain>();
             services.Services.AddScoped<IUserRepository, UserRepository>();
+            services.Services.AddScoped<LivePurchaseContext, LivePurchaseContext>();
         }
     }
 }
