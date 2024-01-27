@@ -1,4 +1,5 @@
 using DataAcces.ModelsDb;
+using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using System.Linq;
 
@@ -31,6 +32,13 @@ namespace DataAcces.Repositorie
             }
 
             
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            List<User> usuarios = await _dbcontext.Users.ToListAsync();
+
+            return usuarios;
         }
    }
 }

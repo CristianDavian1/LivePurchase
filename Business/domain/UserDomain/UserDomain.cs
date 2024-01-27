@@ -2,7 +2,7 @@ using Business.Domain.UserDomain;
 using Models.Responses;
 using Models.DTOs;
 using DataAcces.Repositorie;
-
+using DataAcces.ModelsDb;
 public class UserDomain : IUserDomain
 {
 
@@ -42,5 +42,39 @@ public class UserDomain : IUserDomain
             return repuesta;
         }
        
+    }
+
+    public async Task<UsersResponse> GetUsuarios()
+    {
+        try{
+            var getU = await _IUserRepo.GetUsers();
+            if(getU.Count > 0){
+                
+                UsersResponse usuarios = new UsersResponse
+                {
+                    Status = 200,
+                    msg = "OK",
+                    Usuarios = getU
+                };
+                return usuarios;
+            } else {
+                UsersResponse usuarios = new UsersResponse
+                {
+                    Status = 204,
+                    msg = "OK - No se encontraron usuarios",
+                    Usuarios = getU
+                };
+
+                return usuarios;
+            }
+        } catch(System.Exception e){
+            UsersResponse usuarios = new UsersResponse
+                {
+                    Status = 200,
+                    msg = $"Error del servidor al obtener usuarios {e}",
+                    Usuarios = null
+                };
+                return usuarios;
+        }
     }
 }

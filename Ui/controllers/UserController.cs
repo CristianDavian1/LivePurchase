@@ -26,9 +26,17 @@ namespace Presentation.Controllers
             }catch(System.Exception e){
                 return Problem(e.Message);
             }
-            
+        }
 
-            
+        [HttpGet]
+        public async Task<IActionResult> ObtenerUsuarios()
+        {
+            try {
+                var getUsers = await _domainUser.GetUsuarios();
+                return Ok(getUsers);
+            } catch(System.Exception e){
+                return Problem(e.Message);
+            }
         }
     }
 }
