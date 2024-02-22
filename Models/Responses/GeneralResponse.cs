@@ -1,11 +1,11 @@
-using DataAcces.ModelsDb;
+using DataAcces.ModelsDbAWS;
 
 namespace Models.Responses
 {
-    public class GeneralResponseMessage
+    public class GeneralResponseMessage<T>
     {
         public int Status {get; set;}
-        public string Msg {get; set;} = "";
+        public T Msg {get; set;}
     }
 
     public class UsersResponse 

@@ -1,5 +1,6 @@
 using Models.DTOs;
-using DataAcces.ModelsDb;
+using DataAcces.ModelsDbAWS;
+using Models.Responses;
 
 
 namespace DataAcces.Repositorie
@@ -8,5 +9,6 @@ namespace DataAcces.Repositorie
     {
         Task<Boolean> AddUser(RequestAddGenericUser addUser);
         Task<List<User>> GetUsers();
+        Task<User> UserLogin(RequestAuthenticate auth);
     }
 }

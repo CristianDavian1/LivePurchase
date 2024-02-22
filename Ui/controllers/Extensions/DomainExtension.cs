@@ -1,6 +1,6 @@
 using Business.Domain.UserDomain;
 using DataAcces.Repositorie;
-using DataAcces.ModelsDb;
+using DataAcces.ModelsDbAWS;
 
 namespace Ui.Controllers.Extensions
 {

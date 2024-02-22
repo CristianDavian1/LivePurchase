@@ -4,6 +4,7 @@ using Models.DTOs;
 using Models.Responses;
 using Business.Domain.UserDomain;
 
+
 namespace Presentation.Controllers
 {
     [ApiController]
@@ -11,10 +12,12 @@ namespace Presentation.Controllers
     public class UserController : Controller
     {
         private readonly IUserDomain _domainUser;
+        private IConfiguration config;
 
         public UserController(IUserDomain domainUser)
         {
             _domainUser = domainUser;
+            this.config = config;
         }
 
         [HttpPost]
@@ -38,5 +41,23 @@ namespace Presentation.Controllers
                 return Problem(e.Message);
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Login(RequestAuthenticate auth)
+        {
+            try{
+                var authe = await _domainUser.Autenticate(auth);
+                if (authe != null){
+                    return Ok(authe);
+                } else {
+                   return Ok(new {msj = "Usuario no encontrado"});
+                }
+                
+            } catch(System.Exception e){
+                return Problem(e.Message);
+            }
+        }
+
+
     }
 }

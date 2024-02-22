@@ -51,6 +51,10 @@ public partial class LivePurchaseContext : DbContext
                 .HasMaxLength(255)
                 .HasDefaultValueSql("'NULL'")
                 .HasColumnName("userType");
+            entity.Property(e => e.password)
+                .HasMaxLength(255)
+                .HasDefaultValueSql("'NULL'")
+                .HasColumnName("password");
         });
 
         OnModelCreatingPartial(modelBuilder);

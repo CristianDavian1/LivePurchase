@@ -1,7 +1,9 @@
-using DataAcces.ModelsDb;
+using DataAcces.ModelsDbAWS;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using System.Linq;
+using Models.Responses;
+using Models;
 
 namespace DataAcces.Repositorie
 {
@@ -17,11 +19,16 @@ namespace DataAcces.Repositorie
         {
             var newUser = new User
             {
+                Id = addUser.UserId,
                 UserName = addUser.UserName,
                 AddressUser = addUser.AddressUser,
                 UserEmail = addUser.UserEmail,
                 UserRol = addUser.UserRol,
-                UserType = addUser.userType
+                UserType = addUser.userType,
+                Password = addUser.password,
+                Names = addUser.names,
+                LastNames = addUser.lastNames,
+                Document = addUser.document
             };
             _dbcontext.Add(newUser);
             var res = await _dbcontext.SaveChangesAsync();
@@ -40,5 +47,15 @@ namespace DataAcces.Repositorie
 
             return usuarios;
         }
+
+        public async Task<User> UserLogin(RequestAuthenticate auth)
+        {
+            var respose = await _dbcontext.Users.FirstOrDefaultAsync(u => u.UserEmail == auth.userEmail && u.Password == auth.password);
+
+            return respose;
+
+        }
+
+
    }
 }

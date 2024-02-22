@@ -2,7 +2,8 @@ using Business.Domain.UserDomain;
 using Models.Responses;
 using Models.DTOs;
 using DataAcces.Repositorie;
-using DataAcces.ModelsDb;
+using DataAcces.ModelsDbAWS;
+
 public class UserDomain : IUserDomain
 {
 
@@ -13,19 +14,19 @@ public class UserDomain : IUserDomain
         _IUserRepo = userRepo;
     }
 
-    public async Task<GeneralResponseMessage> CreateUser(RequestAddGenericUser user)
+    public async Task<GeneralResponseMessage<string>> CreateUser(RequestAddGenericUser user)
     {
         try{
              var add = await _IUserRepo.AddUser(user);
              if (add == true){
-                GeneralResponseMessage repuesta = new GeneralResponseMessage
+                GeneralResponseMessage<string> repuesta = new GeneralResponseMessage<string>
                 {
                     Status = 200,
                     Msg = "Se agrego el usuario correctamente" 
                 };
             return repuesta;
              } else {
-                GeneralResponseMessage repuesta = new GeneralResponseMessage
+                GeneralResponseMessage<string> repuesta = new GeneralResponseMessage<string>
                 {
                     Status = 200,
                     Msg = "No se pudo agregar el usuario" 
@@ -34,7 +35,7 @@ public class UserDomain : IUserDomain
              }
              
         }catch(System.Exception e){
-            GeneralResponseMessage repuesta = new GeneralResponseMessage
+            GeneralResponseMessage<string> repuesta = new GeneralResponseMessage<string>
                 {
                     Status = 500,
                     Msg =  e.Message
@@ -76,5 +77,35 @@ public class UserDomain : IUserDomain
                 };
                 return usuarios;
         }
+    }
+
+    public async Task<GeneralResponseMessage<User>> Autenticate(RequestAuthenticate auth)
+    {
+        try{
+            var res = await _IUserRepo.UserLogin(auth);
+            if (res != null){
+                GeneralResponseMessage<User> response = new GeneralResponseMessage<User>
+                {
+                    Status = 200,
+                    Msg = res
+                };
+            return response;
+            } else {
+                GeneralResponseMessage<User> response = new GeneralResponseMessage<User>
+                {
+                    Status = 204,
+                    Msg = null
+                };
+                return response;
+            }
+            
+        } catch(System.Exception e){
+            GeneralResponseMessage<User> errorResponse = new GeneralResponseMessage<User>
+            {
+                Status = 500,
+                Msg = null 
+            };
+        return errorResponse;
+        }   
     }
 }
