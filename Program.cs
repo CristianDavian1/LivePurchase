@@ -1,6 +1,16 @@
 using Ui.Controllers.Extensions;
+using Microsoft.Extensions.Configuration;
+using DataAcces.ModelsDb;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+// recuperar secreto de conexion a la base de datos
+var connection = builder.Configuration["ConnectionStrings:DefaultConnection"] ?? "";
+builder.Services.AddSingleton(connection);
+
 //Añadir servicios al contenedor con dependencias
 builder.IncludeDomain();
 // Add services to the container.
