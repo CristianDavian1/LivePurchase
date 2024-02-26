@@ -2,14 +2,28 @@ using Ui.Controllers.Extensions;
 using Microsoft.Extensions.Configuration;
 using DataAcces.ModelsDb;
 using Microsoft.EntityFrameworkCore;
-
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
-// recuperar secreto de conexion a la base de datos
+// recuperar secreto de conexion a la base de datos y crear una unica instancia
 var connection = builder.Configuration["ConnectionStrings:DefaultConnection"] ?? "";
 builder.Services.AddSingleton(connection);
+// Add jwt 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       .AddJwtBearer(options => { options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "",
+            ValidAudience = "",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("AKIAU3S75QKKR6PATVOAFDGCVSGDSDRJHDFHDFHSDTS"))
+        };
+        });
 
 //Añadir servicios al contenedor con dependencias
 builder.IncludeDomain();
@@ -34,7 +48,3 @@ if (app.Environment.IsDevelopment())
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -14,4 +14,6 @@ namespace Models.Responses
         public string msg {get; set;}
         public List<User> Usuarios {get; set;} = null;
     }
+
+    
 }

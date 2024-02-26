@@ -9,6 +9,6 @@ namespace DataAcces.Repositorie
     {
         Task<Boolean> AddUser(RequestAddGenericUser addUser);
         Task<List<User>> GetUsers();
-        Task<User> UserLogin(RequestAuthenticate auth);
+        Task<User> UserLogin(LoginDto auth);
     }
 }

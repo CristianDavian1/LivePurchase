@@ -5,6 +5,7 @@ using System.Linq;
 using Models.Responses;
 using Models;
 
+
 namespace DataAcces.Repositorie
 {
    public class UserRepository : IUserRepository
@@ -48,9 +49,9 @@ namespace DataAcces.Repositorie
             return usuarios;
         }
 
-        public async Task<User> UserLogin(RequestAuthenticate auth)
+        public async Task<User> UserLogin(LoginDto auth)
         {
-            var respose = await _dbcontext.Users.FirstOrDefaultAsync(u => u.UserEmail == auth.userEmail && u.Password == auth.password);
+            var respose = await _dbcontext.Users.FirstOrDefaultAsync(u => u.UserName == auth.UserName && u.Password == auth.Password);
 
             return respose;
 

@@ -8,6 +8,6 @@ namespace Business.Domain.UserDomain
     {
         Task<GeneralResponseMessage<string>> CreateUser(RequestAddGenericUser user);
         Task<UsersResponse> GetUsuarios();
-        Task<GeneralResponseMessage<User>> Autenticate(RequestAuthenticate auth);
+        Task<GeneralResponseMessage<User>> Autenticate(LoginDto auth);
     }
 }

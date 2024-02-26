@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
 
-namespace Models.DTOs
+namespace Models.DTOs;
+
+public class LoginDto
 {
-    public class RequestAuthenticate
-    {
-        public string userEmail {get; set;} = null!;
-        public string password {get; set;} = null!;
-    }
+    [Required]
+    public string UserName { get; set; } = string.Empty;
+
+    [Required]
+    [DataType(DataType.Password)]
+    public string Password { get; set; } = string.Empty;
 }

@@ -79,7 +79,7 @@ public class UserDomain : IUserDomain
         }
     }
 
-    public async Task<GeneralResponseMessage<User>> Autenticate(RequestAuthenticate auth)
+    public async Task<GeneralResponseMessage<User>> Autenticate(LoginDto auth)
     {
         try{
             var res = await _IUserRepo.UserLogin(auth);

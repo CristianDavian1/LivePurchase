@@ -3,7 +3,8 @@ using System;
 using Models.DTOs;
 using Models.Responses;
 using Business.Domain.UserDomain;
-
+using Microsoft.AspNetCore.Authorization;
+using Utils.Security;
 
 namespace Presentation.Controllers
 {
@@ -12,15 +13,18 @@ namespace Presentation.Controllers
     public class UserController : Controller
     {
         private readonly IUserDomain _domainUser;
+        private readonly TokenGenerator _tokenGenerator;
         private IConfiguration config;
 
-        public UserController(IUserDomain domainUser)
+        public UserController(IUserDomain domainUser, TokenGenerator tokenGenerator)
         {
             _domainUser = domainUser;
             this.config = config;
+            _tokenGenerator = tokenGenerator;
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddGenericUser([FromBody] RequestAddGenericUser UserRequest)
         {
             try {
@@ -32,23 +36,26 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ObtenerUsuarios()
         {
             try {
-                var getUsers = await _domainUser.GetUsuarios();
-                return Ok(getUsers);
+                
+                return Ok("seee jajajaja");
             } catch(System.Exception e){
                 return Problem(e.Message);
             }
         }
         
         [HttpPost]
-        public async Task<IActionResult> Login(RequestAuthenticate auth)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginDto auth)
         {
             try{
-                var authe = await _domainUser.Autenticate(auth);
-                if (authe != null){
-                    return Ok(authe);
+                // var authe = await _domainUser.Autenticate(auth);
+                if (auth.UserName == "perrohp"){
+                    var tokenGenerado = _tokenGenerator.GenerarToken(auth);
+                    return Ok(new {usuario = auth, token = tokenGenerado});
                 } else {
                    return Ok(new {msj = "Usuario no encontrado"});
                 }

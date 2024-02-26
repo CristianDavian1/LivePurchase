@@ -1,6 +1,7 @@
 using Business.Domain.UserDomain;
 using DataAcces.Repositorie;
 using DataAcces.ModelsDbAWS;
+using Utils.Security;
 
 namespace Ui.Controllers.Extensions
 {
@@ -11,6 +12,8 @@ namespace Ui.Controllers.Extensions
             services.Services.AddScoped<IUserDomain, UserDomain>();
             services.Services.AddScoped<IUserRepository, UserRepository>();
             services.Services.AddScoped<LivePurchaseContext, LivePurchaseContext>();
+            services.Services.AddScoped<TokenGenerator, TokenGenerator>();
+
         }
     }
 }
