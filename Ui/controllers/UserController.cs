@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
 using Models.DTOs;
 using Models.Responses;
 using Business.Domain.UserDomain;
@@ -24,7 +23,6 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> AddGenericUser([FromBody] RequestAddGenericUser UserRequest)
         {
             try {
@@ -40,8 +38,8 @@ namespace Presentation.Controllers
         public async Task<IActionResult> ObtenerUsuarios()
         {
             try {
-                
-                return Ok("seee jajajaja");
+                var getUsers = await _domainUser.GetUsuarios();
+                return Ok(getUsers);
             } catch(System.Exception e){
                 return Problem(e.Message);
             }
@@ -52,12 +50,12 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Login(LoginDto auth)
         {
             try{
-                // var authe = await _domainUser.Autenticate(auth);
-                if (auth.UserName == "perrohp"){
+                var authe = await _domainUser.Autenticate(auth);
+                if (authe.Msg != null){
                     var tokenGenerado = _tokenGenerator.GenerarToken(auth);
-                    return Ok(new {usuario = auth, token = tokenGenerado});
+                    return Ok(new {usuario = authe, token = tokenGenerado});
                 } else {
-                   return Ok(new {msj = "Usuario no encontrado"});
+                   return Ok(new {stattus = 204, msj = "Usuario no encontrado, o contraseña incorrecta"});
                 }
                 
             } catch(System.Exception e){

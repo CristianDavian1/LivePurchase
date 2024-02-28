@@ -13,7 +13,7 @@ namespace Ui.Controllers.Extensions
             services.Services.AddScoped<IUserRepository, UserRepository>();
             services.Services.AddScoped<LivePurchaseContext, LivePurchaseContext>();
             services.Services.AddScoped<TokenGenerator, TokenGenerator>();
-
+            services.Services.AddScoped<SecuredPassword, SecuredPassword>();
         }
     }
 }
